@@ -1,0 +1,49 @@
+<head>
+  <title>chat</title>
+</head>
+
+<body>
+  {{> select_place }}
+  {{> chat}}
+  <div class="places" style="">
+  </div>
+</body>
+
+<template name="messages">
+  <ul>
+    {{#each messages}}
+      {{> message}}
+    {{/each}}
+  </ul>
+</template>
+
+<template name="message">
+  <li>
+    {{message}}
+  </li>
+</template>
+
+<template name="chat">
+  {{#if show}}
+    <h1>{{place_name}}</h1>
+
+    {{> messages}}
+
+    <form id="input">
+      <input type="text" />
+      <input type="submit" value="enviar" />
+    </form>
+   {{/if}}
+</template>
+
+<template name="select_place">
+  {{#if show}}
+    Selecciona un lugar
+    <input type="text" id="query" />
+    <ul>
+    {{#each places}}
+      <li><a data-id="{{id}}" href="#" class="4sqr_place">{{name}}</a> </li>
+    {{/each}}
+    </ul>
+  {{/if}}
+</template>
