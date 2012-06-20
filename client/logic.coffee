@@ -5,18 +5,7 @@ success = (position) ->
   lat = position.coords.latitude
   lon = position.coords.longitude
 
-  #peticion de lugares a foursqueare
-  $.ajax({
-    url: "https://api.foursquare.com/v2/venues/search",
-    data: "ll=#{lat},#{lon}&client_id=IHMMPIGOYA2LOITCNDCUFNTHWLERW0MLTGB2CGINJCZT03V4&client_secret=OVSYIKEBFTRPYCVBDBT0LMHO3I23Z0JIHOQTBYZ02YPFLOQD&v=20120620&limit=50",
-    dataType: "json",
-    success: (data) ->
-      places = $.map data.response.venues, (e, i) ->
-        {name: e.name, id: e.id}
-
-      Session.set("foursquare_places", places)
-      Session.set("show_places", places)
-  })
+  foursquare_api()
 
 error = () ->
     "error"
@@ -31,3 +20,30 @@ find_place = (query) ->
     if e.name.match(re)
       matched_places.push(e)
   return matched_places
+
+#peticion de lugares a foursqueare
+foursquare_api = (params) ->
+
+  if typeof params != typeof {}
+    params = {}
+
+  api_params = {
+    client_id: "clientId"
+    client_secret: "clientSecret"
+    v: moment().format("YYYYmmdd")
+    limit: 50
+    ll: "#{lat},#{lon}"
+  }
+  $.extend(api_params,params)
+  
+  $.ajax({
+    url: "https://api.foursquare.com/v2/venues/search",
+    data: api_params,
+    dataType: "json",
+    success: (data) ->
+      places = $.map data.response.venues, (e, i) ->
+        {name: e.name, id: e.id}
+
+      Session.set("foursquare_places", places)
+      Session.set("show_places", places)
+  })

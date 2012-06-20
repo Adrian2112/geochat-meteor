@@ -27,6 +27,10 @@ Template.select_place.events =
 
   'keyup #query' : (event) ->
     query = $("#query").val()
-    console.log query
     Session.set("show_places", find_place(query))
+
+  'submit .query' : (event) ->
+    query = $("#query").val()
+    foursquare_api({query: query})
+    event.preventDefault()
 

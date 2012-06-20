@@ -39,7 +39,9 @@
 <template name="select_place">
   {{#if show}}
     Selecciona un lugar
-    <input type="text" id="query" />
+    <form class="query">
+      <input type="text" id="query"/>
+    </form>
     <ul>
     {{#each places}}
       <li><a data-id="{{id}}" href="#" class="4sqr_place">{{name}}</a> </li>
